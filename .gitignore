@@ -1,0 +1,98 @@
+# ─── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+.installed.cfg
+*.egg
+
+# ─── Virtual environments ────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# ─── Jupyter ─────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ─── IDE / editors ───────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# ─── ML artifacts ────────────────────────────────────────────────────────────
+# Model weights — keep code, not binaries
+*.pt
+*.pth
+*.onnx
+*.engine
+*.tflite
+*.h5
+*.ckpt
+*.safetensors
+runs/
+wandb/
+mlruns/
+lightning_logs/
+
+# ─── Data ────────────────────────────────────────────────────────────────────
+# All data is generated / downloaded — never commit
+data/raw/*
+data/synthetic/*
+data/real/*
+data/models/*
+!data/raw/.gitkeep
+!data/synthetic/.gitkeep
+!data/real/.gitkeep
+!data/models/.gitkeep
+
+# Captured frames, video clips
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+# Allow demo clips checked in deliberately
+!docs/demo*.mp4
+
+# Image dumps from rendering / labeling
+*.png
+*.jpg
+*.jpeg
+# Allow images committed to docs
+!docs/**/*.png
+!docs/**/*.jpg
+
+# 3D assets (Pokemon-3D-api/assets clone, model rips, etc.)
+*.glb
+*.gltf
+*.fbx
+*.obj
+*.blend
+*.blend1
+*.trmdl
+*.gfbmdl
+
+# ─── Blender ─────────────────────────────────────────────────────────────────
+*.blend1
+*.blend2
+
+# ─── OS / temp ───────────────────────────────────────────────────────────────
+*.log
+*.tmp
+.cache/
+
+# ─── Secrets ─────────────────────────────────────────────────────────────────
+.env
+.env.local
+*.key
+*.pem

@@ -1,0 +1,53 @@
+# Render pipeline configuration.
+# Tune these to match the look of Pokemon Let's Go gameplay footage.
+# Start conservative; widen ranges once you confirm the classifier works on a small set.
+
+render:
+  # Output image size — must match (or be larger than) classifier input.
+  # ResNet50 / EfficientNet-B0 expect 224x224. Render slightly larger to allow random crops.
+  width: 256
+  height: 256
+  samples: 32              # Cycles render samples. Higher = cleaner but slower. 32 is fine for training data.
+  engine: "BLENDER_EEVEE"  # EEVEE is much faster than CYCLES and looks good enough for cel-shaded data.
+                           # Switch to "CYCLES" only if you need ground-truth lighting.
+  background_color: [0.0, 0.0, 0.0, 0.0]  # Transparent — composite over random background later.
+
+camera:
+  # Let's Go uses a roughly 30-45° elevated camera (top-down-ish but not orthographic).
+  # Randomize per render to make the classifier robust to small framing variations.
+  elevation_deg_range: [25, 50]   # Pitch above horizontal. 0 = eye level, 90 = straight down.
+  azimuth_deg_range: [0, 360]     # Yaw around the model. Full rotation captures all sides.
+  distance_range: [2.5, 4.5]      # Distance from origin (model is auto-centered + scaled to ~1m).
+  fov_deg_range: [25, 40]         # Slight FOV jitter — game is roughly in this range.
+  height_offset_range: [-0.1, 0.1]  # Tiny vertical jitter so model isn't always centered.
+
+lighting:
+  # Three-point-ish setup with randomization. Key + fill + slight rim.
+  key:
+    energy_range: [3.0, 6.0]
+    elevation_deg_range: [40, 80]
+    azimuth_deg_range: [0, 360]
+    color_temp_range: [5500, 6500]  # Daylight-ish.
+  fill:
+    energy_range: [0.5, 2.0]
+    color_temp_range: [4500, 6500]
+  ambient:
+    energy_range: [0.2, 0.8]   # World background light. Higher = flatter, more cel-shaded look.
+
+augmentation:
+  # Pose / animation sampling.
+  animation:
+    # If the model has animations (Idle, Walk, Attack), sample a random frame.
+    # Pokemon-3D-api/assets models include these.
+    sample_random_frame: true
+    # If no animation present, fall back to T-pose with small bone-rotation jitter.
+
+  # Slight model-yaw jitter independent of camera azimuth (model rotates within its frame).
+  model_yaw_jitter_deg: [-15, 15]
+
+dataset:
+  # How many renders per Pokemon class.
+  # Start small (50) for the 3-Pokemon proof-of-concept; scale to 300-500 once it's validated.
+  renders_per_class: 50
+  # Train/val split is done at *training* time, not render time. Render everything to one pile.
+  # Output structure: data/synthetic/<dex_id>_<name>/<idx>.png
