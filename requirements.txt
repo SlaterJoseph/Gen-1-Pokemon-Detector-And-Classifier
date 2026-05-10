@@ -38,3 +38,6 @@ ipykernel>=6.29
 # Render scripts run via the Blender executable directly:
 #   blender --background --python scripts/render_pokemon.py -- <args>
 # Install Blender 4.x separately: https://www.blender.org/download/
+
+bpy
+mathutils
