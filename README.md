@@ -37,3 +37,15 @@ pkill -f "Blender --background"
 ```
 
 Kills all matching Blender processes. Any in-progress render is discarded; previously completed PNGs stay on disk, so re-running picks up where the kill happened (assuming your script implements skip-if-exists).
+
+## Acknowledgments
+
+The 3D models used to generate the synthetic dataset come from the [**Pokemon-3D-api/assets**](https://github.com/Pokemon-3D-api/assets) repository — a community-maintained collection of web-optimized GLB Pokémon models.
+
+## Disclaimer
+
+This project is a **non-commercial, educational, fan-made** computer-vision exercise. It is not affiliated with, endorsed by, sponsored by, or otherwise associated with Nintendo, Game Freak, Creatures Inc., or The Pokémon Company International.
+
+Pokémon, Pokémon character names, designs, sprites, 3D models, and all related trademarks are the property of **Nintendo / Game Freak / Creatures Inc. / The Pokémon Company International**. All rights to those assets belong to their respective owners. 
+
+No commercial use of the trained models, generated datasets, or any derivative works is permitted under this repository. If you are a rights-holder and would like content removed or modified, please open an issue.
