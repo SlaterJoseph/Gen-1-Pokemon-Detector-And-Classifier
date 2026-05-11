@@ -1,5 +1,7 @@
 import bpy
 from mathutils import Vector
+from src.utils import paths
+from src.utils.exceptions import ModelException
 
 TARGET_SCALE = 2.0
 
@@ -39,7 +41,7 @@ def normalize_model() -> None:
     bpy.context.view_layer.update()
 
 
-def calculate_bboxes(all_corners) -> tuple[Vector, Vector]:
+def calculate_bboxes(all_corners: list) -> tuple[Vector, Vector]:
     """
     Function to calculate the bounding boxes
     :param all_corners: Corners of the bounding boxes
@@ -61,7 +63,7 @@ def _is_real_mesh(obj) -> bool:
     return not any("not_exported" in c.name.lower() for c in obj.users_collection)
 
 
-def setup_scene_objects() -> tuple[bpy.types.Object, bpy.types.Camera]:
+def setup_scene_objects() -> tuple[bpy.types.Object, bpy.types.Object]:
     """
     Function to set up scene objects
     :return: tuple of scene objects [light obj]
@@ -73,3 +75,37 @@ def setup_scene_objects() -> tuple[bpy.types.Object, bpy.types.Camera]:
     camera_obj = bpy.data.objects.new(name='CAMERA', object_data=camera_data)
 
     return light_obj, camera_obj
+
+def scene_setup() -> None:
+    """
+    Setup default scene settings
+    :return: None
+    """
+    bpy.context.scene.render.image_settings.file_format = 'PNG'
+    bpy.context.scene.render.image_settings.color_mode = 'RGBA'
+    bpy.context.scene.render.film_transparent = True
+    bpy.context.scene.render.resolution_x = 256
+    bpy.context.scene.render.resolution_y = 256
+
+
+def clear_scene() -> None:
+    """
+    Clear out the scene
+    :return: None
+    """
+    for obj in list(bpy.data.objects):
+        bpy.data.objects.remove(obj, do_unlink=True)
+    bpy.ops.outliner.orphans_purge(do_local_ids=True, do_linked_ids=True, do_recursive=True)
+
+
+def import_model(pokedex: int) -> None:
+    try:
+        # Import Pokemon
+        current_glb = f'{pokedex}.glb'
+        pokemon = paths.GLB_DIR / current_glb
+        bpy.ops.import_scene.gltf(filepath=str(pokemon), directory=str(paths.GLB_DIR),
+                                  files=[{"name": current_glb, "name": current_glb}], loglevel=20)
+    except Exception as e:
+        with open(paths.DATA_DIR / "render_failure.log", "a") as f:
+            f.write(f"#{pokedex}: {type(e).__name__}: {e}\n")
+        raise ModelException(f"{pokedex}: {type(e).__name__}: {e}")

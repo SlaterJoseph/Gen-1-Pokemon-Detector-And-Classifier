@@ -20,7 +20,7 @@ def random_lighting(light_obj: bpy.types.Object) -> None:
 
 
 
-def adjust_camera(camera_obj: bpy.types.Camera) -> None:
+def adjust_camera(camera_obj: bpy.types.Object) -> None:
     """
     Randomize the camera angle
     :param camera_obj: The camera source
