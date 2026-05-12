@@ -38,6 +38,36 @@ pkill -f "Blender --background"
 
 Kills all matching Blender processes. Any in-progress render is discarded; previously completed PNGs stay on disk, so re-running picks up where the kill happened (assuming your script implements skip-if-exists).
 
+## Compositing Backgrounds
+
+After the render pipeline finishes, every PNG under `data/synthetic/` has a transparent background. Before training, those need to be composited over real backgrounds. `scripts/composite_backgrounds.py` does this — it pairs each render with a random image from `data/backgrounds/` and writes the result to `data/training_data/`.
+
+### Command
+
+```bash
+caffeinate -i nohup python /Path/To/composite_backgrounds.py > /tmp/composite_batch.log 2>&1 &
+```
+
+Replace `/Path/To/composite_backgrounds.py` with the absolute path to this repo's `scripts/composite_backgrounds.py`.
+
+**Note:** the script imports from `src.utils`, so it needs the project root on `sys.path`. The script handles this internally via `sys.path.insert`; no extra environment variables needed. If you ever see `ModuleNotFoundError: No module named 'src'`, confirm that line is present at the top of the script.
+
+### Monitoring progress
+
+```bash
+tail -f /tmp/composite_batch.log
+```
+
+You'll see a single `tqdm` bar advancing one tick per Pokemon directory (151 total).
+
+### Stopping the batch early
+
+```bash
+pkill -f composite_backgrounds.py
+```
+
+Already-completed composites stay on disk; re-running picks up where the kill happened thanks to the skip-if-exists check.
+
 ## Acknowledgments
 
 The 3D models used to generate the synthetic dataset come from the [**Pokemon-3D-api/assets**](https://github.com/Pokemon-3D-api/assets) repository — a community-maintained collection of web-optimized GLB Pokémon models.

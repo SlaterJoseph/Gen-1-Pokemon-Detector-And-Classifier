@@ -68,7 +68,7 @@ def render(pokedex: int, samples_per_pokemon: int=10) -> None:
         adjust_camera(camera)
         bpy.context.view_layer.update()
 
-        output_path = paths.DATA_DIR / "synthetic" / f"{pokedex:03d}" / f"sample_{i:04d}.png"
+        output_path = paths.SYNTHETIC_DIR / f"{pokedex:03d}" / f"sample_{i:04d}.png"
         output_path.parent.mkdir(parents=True, exist_ok=True)
         bpy.context.scene.render.filepath = str(output_path)
         bpy.ops.render.render(write_still=True)
