@@ -11,7 +11,7 @@ def random_lighting(light_obj: bpy.types.Object) -> None:
     :param light_obj: The light source
     :return: None
     """
-    elevation = random.randint(25, 70)
+    elevation = random.randint(2, 55)
     azimuth = random.randint(0, 360)
     light_obj.rotation_euler = (math.radians(elevation), 0, math.radians(azimuth))
 

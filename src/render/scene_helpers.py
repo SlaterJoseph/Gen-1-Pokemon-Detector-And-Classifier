@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import bpy
 from mathutils import Vector
 from src.utils import paths
@@ -98,14 +100,11 @@ def clear_scene() -> None:
     bpy.ops.outliner.orphans_purge(do_local_ids=True, do_linked_ids=True, do_recursive=True)
 
 
-def import_model(pokedex: int) -> None:
+def import_model(glb_path: Path) -> None:
+    """Import a single GLB file into the current scene."""
     try:
-        # Import Pokemon
-        current_glb = f'{pokedex}.glb'
-        pokemon = paths.GLB_DIR / current_glb
-        bpy.ops.import_scene.gltf(filepath=str(pokemon), directory=str(paths.GLB_DIR),
-                                  files=[{"name": current_glb, "name": current_glb}], loglevel=20)
+        bpy.ops.import_scene.gltf(filepath=str(glb_path), loglevel=20)
     except Exception as e:
         with open(paths.DATA_DIR / "render_failure.log", "a") as f:
-            f.write(f"#{pokedex}: {type(e).__name__}: {e}\n")
-        raise ModelException(f"{pokedex}: {type(e).__name__}: {e}")
+            f.write(f"{glb_path.name}: {type(e).__name__}: {e}\n")
+        raise ModelException(f"{glb_path}: {type(e).__name__}: {e}")
