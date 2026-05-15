@@ -1,43 +1,22 @@
-# ─── Core ML ─────────────────────────────────────────────────────────────────
-# Pin major versions only; let pip resolve patch versions.
 torch>=2.2,<3.0
 torchvision>=0.17,<1.0
-timm>=1.0,<2.0                  # Pretrained classifier backbones (ResNet, EfficientNet, ConvNeXt, etc.)
-
-# ─── Detection ───────────────────────────────────────────────────────────────
-ultralytics>=8.2,<9.0           # YOLOv8/v11 — used for Stage 1 detector
-
-# ─── Image / video I/O ───────────────────────────────────────────────────────
+timm>=1.0,<2.0
+ultralytics>=8.2,<9.0
 opencv-python>=4.9,<5.0
 Pillow>=10.0
 imageio>=2.34
-imageio-ffmpeg>=0.4.9           # Reading gameplay video for inference + frame extraction
-
-# ─── Data / utils ────────────────────────────────────────────────────────────
+imageio-ffmpeg>=0.4.9
 numpy>=1.26,<2.2
 pandas>=2.2
 pyyaml>=6.0
 tqdm>=4.66
-scikit-learn>=1.4               # Confusion matrix, train/val splits, metrics
+scikit-learn>=1.4
 matplotlib>=3.8
-seaborn>=0.13                   # Confusion matrix heatmap
-
-# ─── Training infra ──────────────────────────────────────────────────────────
+seaborn>=0.13
 tensorboard>=2.16
-# wandb>=0.17                  # Uncomment if you want experiment tracking
-
-# ─── Inference / demo ────────────────────────────────────────────────────────
-gradio>=4.0                     # For HF Space demo (Stage 5)
-
-# ─── Dev ─────────────────────────────────────────────────────────────────────
+gradio>=4.0
 ruff>=0.4
 pytest>=8.0
 ipykernel>=6.29
-
-# ─── NOTE: Blender's `bpy` is NOT pip-installable for headless rendering.    ─
-# Render scripts run via the Blender executable directly:
-#   blender --background --python scripts/render_pokemon.py -- <args>
-# Install Blender 4.x separately: https://www.blender.org/download/
-
 bpy
 mathutils
