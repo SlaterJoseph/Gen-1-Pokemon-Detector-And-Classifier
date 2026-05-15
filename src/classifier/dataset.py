@@ -3,7 +3,7 @@ from torch.utils.data import DataLoader, Subset
 from src.utils import paths
 from sklearn.model_selection import train_test_split
 
-def build_loader(dataset: ImageFolder, batch_size: int=128, shuffle: bool=True, num_workers: int=4) -> DataLoader:
+def build_loader(dataset: Subset, batch_size: int=128, shuffle: bool=True, num_workers: int=4) -> DataLoader:
     """
     Build the dataloader
     :param dataset: The given dataset

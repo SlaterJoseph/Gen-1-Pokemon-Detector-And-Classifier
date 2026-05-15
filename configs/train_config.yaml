@@ -1,0 +1,19 @@
+model_name: resnet50
+num_classes: 152
+pretrained: true
+
+
+batch_size: 128
+num_workers: 4
+val_fraction: 0.111
+test_fraction: 0.1
+seed: 42
+
+
+lr: 3.0e-4
+weight_decay: 1.0e-4
+epochs: 2
+scheduler: cosine  # or "step", "none"
+
+checkpoint_dir: checkpoints
+log_interval: 50

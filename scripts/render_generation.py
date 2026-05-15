@@ -4,10 +4,7 @@ import bpy
 import sys
 from tqdm import tqdm
 
-# Resolve the project root from this script's location so the `src` package
-# is importable regardless of where the repo is cloned on disk. This file
-# lives at `<project_root>/scripts/render_generation.py`, so the parent of
-# its parent is the project root.
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
