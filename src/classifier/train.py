@@ -58,7 +58,11 @@ def save_checkpoint(path, model: Module, optimizer: AdamW, scheduler: CosineAnne
 
 
 def train(config: dict):
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device(
+        "cuda" if torch.cuda.is_available()
+        else "mps" if torch.backends.mps.is_available()
+        else "cpu"
+    )
     torch.manual_seed(config["seed"])
     checkpoint_dir = paths.PROJECT_ROOT / config["model_name"] / config["checkpoint_dir"]
     checkpoint_dir.mkdir(parents=True, exist_ok=True)
