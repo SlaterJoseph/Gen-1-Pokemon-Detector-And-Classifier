@@ -10,6 +10,7 @@ from src.classifier.transforms import train_transform, eval_transform
 from torch.nn import Module
 from torch.optim.lr_scheduler import CosineAnnealingLR
 from tqdm import tqdm
+from pathlib import Path
 
 def train_one_epoch(model: Module, loader: DataLoader, optimizer: AdamW, criterion: CrossEntropyLoss, device: torch.device, epoch_idx: int) -> tuple[float, float]:
     model.train()
@@ -46,7 +47,7 @@ def validate(model: Module, loader: DataLoader, criterion: CrossEntropyLoss, dev
     return loss_sum / len(loader), acc_sum / len(loader.dataset)
 
 
-def save_checkpoint(path, model: Module, optimizer: AdamW, scheduler: CosineAnnealingLR, epoch: int, val_acc: float) -> None:
+def save_checkpoint(path: Path, model: Module, optimizer: AdamW, scheduler: CosineAnnealingLR, epoch: int, val_acc: float) -> None:
     state = {
         "model": model.state_dict(),
         "optimizer": optimizer.state_dict(),

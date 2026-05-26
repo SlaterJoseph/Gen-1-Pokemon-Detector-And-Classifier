@@ -1,0 +1,12 @@
+model_name: resnet50
+num_classes: 152
+
+batch_size: 128
+num_workers: 4
+test_fraction: 0.1
+seed: 42
+
+checkpoint_dir: checkpoints
+checkpoint_name: best_model.pth
+
+real_eval_dir: data/real_world_crops
